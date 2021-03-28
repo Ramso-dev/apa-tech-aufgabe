@@ -28,28 +28,28 @@ export class PersonDetailsComponent implements OnInit {
       this.localDataService.getPersonById(this.routeId).subscribe(
         (data: Person) => {
           this.person = data;
+
+          this.localDataService.getTasks().subscribe(
+            (data: Task[]) => {
+              this.tasks = data.filter((task) =>
+                this.person.tasksIds.includes(task.id)
+              );
+              this.tasks.forEach(
+                (task) =>
+                  (task.clock = this.localDataService.millisecondsToClock(
+                    task.duration
+                  ))
+              );
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
         },
         (err) => {
           console.log(err);
         }
       );
     });
-
-    this.localDataService.getTasks().subscribe(
-      (data: Task[]) => {
-        this.tasks = data.filter((task) =>
-          this.person.tasksIds.includes(task.id)
-        );
-        this.tasks.forEach(
-          (task) =>
-            (task.clock = this.localDataService.millisecondsToClock(
-              task.duration
-            ))
-        );
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 }

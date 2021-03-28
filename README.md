@@ -3,17 +3,15 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
 
 
+# Dataset
+
+Added a service to retrieve data from local json files in order to simulate data fetched from a database as it would usually be the real case. As the proposed exercise implies a many-to-many relationship between the persons and tasks objects, every dataset's object has been assigned an id and an array of the ids from the related objects. I opted for using milliseconds for the duration property of the task object as it is usually the case.
+
 # Solution
 
-Data: 
-added a service to retrieve data from local json files in order to simulate data coming from fetched from a database.
+The proposed exercise is suited for a routing strategy based on sibling views, as the proposed images don't show a structure for fitting a parent-child strategy. The views for persons and tasks will lead to two different views for person details and task details. This has been implemented with routerLink based on a routing strategy using every object's id as path reference.
 
-Routing:
-I have implemented a routing strategy based routerlink with the id of the objects. As the view are syblings of each other, this was for me the best matching solution.
-In the views of persons and tasks, a click on an object will navigate to a relative route using the id of the clicked object. Once there, the id of the route will be use as reference to get the needed objects for the details.
+# Demo
 
-Methods that I discarded:
-- Another option would have been using the routerlink and passing the object through the state. This would spare retrieving the object but would lose the state data if a page refresh is triggered which is not user friendly. 
+https://apa-tech-aufgabe01.herokuapp.com/
 
--No child routes
-If you want to have a different view (component load) when you go to persons to persons/:id/details you need to go with defining a second route with full path. Otherwise you should be working with children components

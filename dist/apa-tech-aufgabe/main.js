@@ -58,7 +58,7 @@ class TaskDetailsComponent {
             name: '',
             duration: -1,
             personsIds: [],
-            clock: ''
+            clock: '',
         };
         this.persons = [];
     }
@@ -70,12 +70,12 @@ class TaskDetailsComponent {
                 .subscribe((data) => {
                 this.task = data;
                 this.task.clock = this.localDataService.millisecondsToClock(this.task.duration);
+                this.localDataService.getPersons().subscribe((data) => {
+                    this.persons = data.filter((person) => this.task.personsIds.includes(person.id));
+                }, (err) => {
+                    console.log(err);
+                });
             });
-        }, (err) => {
-            console.log(err);
-        });
-        this.localDataService.getPersons().subscribe((data) => {
-            this.persons = data.filter((person) => this.task.personsIds.includes(person.id));
         }, (err) => {
             console.log(err);
         });
@@ -511,7 +511,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_cdk_layout__WEBPACK_IMPORTED_MODULE_1__["MediaMatcher"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 20, vars: 8, consts: [[1, "container"], ["color", "primary", 1, "toolbar"], ["mat-icon-button", "", 3, "click"], ["src", "assets/images/logo_apait.png", 1, "logo"], [1, "sidenav-container"], ["opened", "true", "fixedTopGap", "40", 1, "sidenav", 3, "mode", "fixedInViewport"], ["snav", ""], ["mat-list-item", "", "routerLinkActive", "active", 3, "routerLink"], [1, "nav-icon"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 20, vars: 8, consts: [[1, "container"], ["color", "primary", 1, "toolbar"], ["mat-icon-button", "", 3, "click"], ["src", "assets/images/logo_apait.png", 1, "logo"], [1, "sidenav-container"], ["opened", "true", "fixedTopGap", "56", 1, "sidenav", 3, "mode", "fixedInViewport"], ["snav", ""], ["mat-list-item", "", "routerLinkActive", "active", 3, "routerLink"], [1, "nav-icon"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-toolbar", 1);
@@ -548,7 +548,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("is-mobile", ctx.mobileQuery.matches);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("margin-top", ctx.mobileQuery.matches ? 40 : 0, "px");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("margin-top", ctx.mobileQuery.matches ? 56 : 0, "px");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("mode", ctx.mobileQuery.matches ? "over" : "side")("fixedInViewport", ctx.mobileQuery.matches);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
@@ -671,15 +671,15 @@ class PersonDetailsComponent {
             this.routeId = parseInt(params['id']);
             this.localDataService.getPersonById(this.routeId).subscribe((data) => {
                 this.person = data;
+                this.localDataService.getTasks().subscribe((data) => {
+                    this.tasks = data.filter((task) => this.person.tasksIds.includes(task.id));
+                    this.tasks.forEach((task) => (task.clock = this.localDataService.millisecondsToClock(task.duration)));
+                }, (err) => {
+                    console.log(err);
+                });
             }, (err) => {
                 console.log(err);
             });
-        });
-        this.localDataService.getTasks().subscribe((data) => {
-            this.tasks = data.filter((task) => this.person.tasksIds.includes(task.id));
-            this.tasks.forEach((task) => (task.clock = this.localDataService.millisecondsToClock(task.duration)));
-        }, (err) => {
-            console.log(err);
         });
     }
 }
