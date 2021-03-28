@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+@import './apa-palettes.scss';
+@import './apa-typography.scss';
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+$apa-primary: mat-palette($md-apa-blue-palette, 500);
+$apa-secondary: mat-palette($md-apa-grey-palette, 500);
+$apa-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+$apa-theme:   mat-light-theme((
+ color: (
+   primary: $apa-primary,
+   accent: $apa-accent,
+   secondary:$apa-secondary
+ )
+));
+
+@include angular-material-typography($custom-typography);
+
+@include mat-core-theme($apa-theme);
+@include angular-material-theme($apa-theme);
+
+:root {
+  --color-primary: #{mat-color($apa-primary)};
+  --color-secondary: #{mat-color($apa-secondary)};
+}
